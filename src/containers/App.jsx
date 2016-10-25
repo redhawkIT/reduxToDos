@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import * as TodoActions from '../actions'
+import { setVisibilityFilter } from '../actions'
 
 import Footer from '../components/Footer'
 import AddTodo from '../components/AddTodo'
@@ -23,11 +24,11 @@ const getVisibleTodos = (todos, filter) => {
 }
 
 
-const App = ({actions, todos}) => (
+const App = ({actions, todos, setVisibilityFilter, active}) => (
   <div>
     <AddTodo {...actions} />
     <TodoList toggleTodo={actions.toggleTodo} todos={todos}/>
-    <Footer/>
+    <Footer setVisibilityFilter={setVisibilityFilter} active={active}/>
   </div>
 )
 
@@ -37,14 +38,22 @@ App.propTypes = {
 }
 
 // Makes redux state available to App by props
-const mapStateToProps = (state) => ({
-  todos: getVisibleTodos(state.todos, state.visibilityFilter)
-})
+const mapStateToProps = (state, ownProps) => {
+  console.log( state)
+  return ({
+    todos: getVisibleTodos(state.todos, state.visibilityFilter),
+    active: state.visibilityFilter
+  })
+}
 
 //
 const mapDispatchToProps = (dispatch) => ({
     // wraps actions creators with dispatch so they can be called directly
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: bindActionCreators(TodoActions, dispatch),
+    setVisibilityFilter: (filter) => {
+      dispatch(setVisibilityFilter(filter))
+    }
+
 })
 
 // connect() will automatically bind dispatch to your actions if they are

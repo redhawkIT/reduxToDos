@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react'
 
-const Link = ({ active, children, onClick }) => {
-
-  if (active) {
+const Link = ({ active, children, setVisibilityFilter, type }) => {
+  console.log("active", active)
+  if (active === type) {
     return <span>{children}</span>
   }
 
   const handleClick = e => {
     e.preventDefault()
-    onClick()
+    console.log("type", type)
+    setVisibilityFilter(type)
   }
 
   return (
@@ -19,9 +20,9 @@ const Link = ({ active, children, onClick }) => {
 }
 
 Link.propTypes = {
-  active: PropTypes.bool.isRequired,
+  active: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired
+  setVisibilityFilter: PropTypes.func.isRequired
 }
 
 export default Link

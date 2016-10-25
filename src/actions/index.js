@@ -10,6 +10,7 @@ export const addTodo = (text) => {
 }
 
 export const setVisibilityFilter = (filter) => {
+  console.log("setVisibilityFilter", filter)
   return {
     type: SET_VISIBILITY_FILTER,
     filter
