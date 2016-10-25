@@ -1,7 +1,6 @@
 import React from 'react'
-import { addTodo } from '../actions'
 
-let AddTodo = ({ addTodo}) => {
+let AddTodo = ({addTodo}) => {
   let input
 
   const handleSubmit = e => {

@@ -6,29 +6,43 @@ import Footer from './Footer'
 import * as TodoActions from '../actions'
 
 import AddTodo from './AddTodo'
-import VisibleTodoList from '../containers/VisibleTodoList'
+import TodoList from './TodoList'
 
-const App = ({actions}) => (
+
+const getVisibleTodos = (todos, filter) => {
+  switch (filter) {
+    case 'SHOW_ALL':
+      return todos
+    case 'SHOW_COMPLETED':
+      return todos.filter(t => t.completed)
+    case 'SHOW_ACTIVE':
+      return todos.filter(t => !t.completed)
+    default:
+      return todos
+  }
+}
+
+
+const App = ({actions, todos}) => (
   <div>
     <AddTodo {...actions} />
-    <VisibleTodoList/>
+    <TodoList {...actions} todos={todos}/>
     <Footer/>
   </div>
 )
 
-// App.propTypes = {
-//   todos: PropTypes.array.isRequired,
-//   actions: PropTypes.object.isRequired
-// }
+App.propTypes = {
+  todos: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
+}
 
 // Makes redux state available to App by props
-const mapStateToProps = (state, ownProps) => ({
-  todos: state.todos,
-  active: ownProps.filter === state.visibilityFilter
+const mapStateToProps = (state) => ({
+  todos: getVisibleTodos(state.todos, state.visibilityFilter)
 })
 
 //
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
     // wraps actions creators with dispatch so they can be called directly
     actions: bindActionCreators(TodoActions, dispatch)
 })
