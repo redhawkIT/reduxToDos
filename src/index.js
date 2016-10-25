@@ -15,7 +15,11 @@ import './index.css'
 injectTapEventPlugin()
 
 let store = createStore(todoApp)
-
+/**
+ * Provider is a component provided to us by the 'react-redux' bindings that
+ * wraps our app - thus making the Redux store/state available to our 'connect()'
+ * calls in component hierarchy below.
+ */
 const Main = () => (
   <MuiThemeProvider>
     <Provider store={store}>
