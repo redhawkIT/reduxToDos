@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Footer from './Footer'
 
 import * as TodoActions from '../actions'
 
-import AddTodo from './AddTodo'
-import TodoList from './TodoList'
+import Footer from '../components/Footer'
+import AddTodo from '../components/AddTodo'
+import TodoList from '../components/TodoList'
 
 
 const getVisibleTodos = (todos, filter) => {
@@ -26,7 +26,7 @@ const getVisibleTodos = (todos, filter) => {
 const App = ({actions, todos}) => (
   <div>
     <AddTodo {...actions} />
-    <TodoList {...actions} todos={todos}/>
+    <TodoList toggleTodo={actions.toggleTodo} todos={todos}/>
     <Footer/>
   </div>
 )
